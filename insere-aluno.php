@@ -6,8 +6,14 @@ use Alura\Pdo\Domain\Model\Student;
 $databasePath = __DIR__ . '/database.sqlite';
 $pdo = new PDO('sqlite:' . $databasePath);
 
-$student = new Student(null, 'Diego Souza', new DateTimeImmutable('1996-05-30'));
+$student = new Student(null, 'Vitor Souza', new DateTimeImmutable('2001-03-25'));
 
-$sqlInsert = "INSERT INTO students (name, birth_date) VALUES ('{$student->name()}', '{$student->birthDate()->format('Y-m-d')}');";
+$sqlInsert = "INSERT INTO students (name, birth_date) VALUES (:name, :birth_date);";
+$statement = $pdo->prepare($sqlInsert); // Preparando o banco de dados para receber as informações seguras, sem sofrer ataque de SQL Injection;
+$statement->bindValue(':name', $student->name());
+$statement->bindValue(':birth_date', $student->birthDate()->format('Y-m-d'));
 
-var_dump($pdo->exec($sqlInsert));
+if ($statement->execute()) {
+    echo "Aluno adicionado com sucesso!" . PHP_EOL;
+};
+
