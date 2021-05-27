@@ -7,7 +7,7 @@ class ConnectionCreator
 {
     public static function createConnection(): PDO 
     {
-        $databasePath = __DIR__ . '/database.sqlite';
+        $databasePath = __DIR__ . '../../../../database.sqlite';
         $connection = new PDO('sqlite:' . $databasePath);
         $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
